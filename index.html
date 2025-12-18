@@ -3,129 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday! 🎂</title>
+    <title>HBD Super Premium! 🚀</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        /* ตั้งค่าพื้นหลังแบบไล่เฉดสีให้ดูเท่ */
-        body {
+        :root {
+            --primary: #ff007f;
+            --secondary: #00d2ff;
+            --accent: #ffdd00;
+        }
+
+        body, html {
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #050505;
+            font-family: 'Montserrat', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: radial-gradient(circle, #1a1a2e, #16213e, #0f3460);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            color: white;
         }
 
-        /* กล่องข้อความหลักสไตล์กระจกฝ้า */
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 3rem;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-            animation: fadeIn 2s ease-in-out;
-            z-index: 1;
-        }
-
-        /* หัวข้อ HBD พร้อม Glow Effect */
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-            background: linear-gradient(45deg, #ff007f, #ffdd00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        p {
-            font-size: 1.5rem;
-            margin-top: 10px;
-            letter-spacing: 2px;
-            color: #e0e0e0;
-        }
-
-        /* ปุ่มกดแบบเท่ๆ */
-        .btn {
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: transparent;
-            border: 2px solid #00d2ff;
-            color: #00d2ff;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background: #00d2ff;
-            color: #1a1a2e;
-            box-shadow: 0 0 20px #00d2ff;
-        }
-
-        /* แอนิเมชันลอยตัว */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* สร้างพื้นหลังที่มีจุดไฟลอยไปมา */
-        .particles {
+        /* เอฟเฟกต์พื้นหลังแบบ Animated Gradient Mesh */
+        .bg-animate {
             position: absolute;
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
+            background: radial-gradient(circle at 20% 30%, #1a1a2e 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, #0f3460 0%, transparent 40%);
+            z-index: -1;
+            filter: blur(50px);
         }
 
-        .particle {
+        .container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* การ์ดแบบ 3D Glassmorphism */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem 3rem;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 
+                        inset 0 0 15px rgba(255,255,255,0.05);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.02) rotateX(5deg) rotateY(5deg);
+        }
+
+        /* หัวข้อ Neon Glow */
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(to right, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 127, 0.6));
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 5px;
+            margin-top: 15px;
+            font-weight: 300;
+        }
+
+        /* ปุ่มกดที่ดูเหมือนปุ่มยานอวกาศ */
+        .btn-celebrate {
+            margin-top: 40px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, var(--primary), #8a2be2);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+        }
+
+        .btn-celebrate:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 127, 0.7);
+            letter-spacing: 2px;
+        }
+
+        .btn-celebrate:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ตกแต่งเพิ่มเติมด้วยลูกบอลเรืองแสง */
+        .orb {
             position: absolute;
-            list-style: none;
-            display: block;
-            background: rgba(255, 255, 255, 0.2);
-            bottom: -150px;
-            animation: animate 25s linear infinite;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--primary);
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: move 20s infinite alternate;
         }
 
-        @keyframes animate {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
-            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+        @keyframes move {
+            from { top: 10%; left: 10%; }
+            to { top: 70%; left: 80%; }
         }
     </style>
 </head>
 <body>
 
-    <div class="particles">
-        <div class="particle" style="width: 80px; height: 80px; left: 25%; animation-delay: 0s;"></div>
-        <div class="particle" style="width: 20px; height: 20px; left: 10%; animation-delay: 2s; animation-duration: 12s;"></div>
-        <div class="particle" style="width: 50px; height: 50px; left: 70%; animation-delay: 4s;"></div>
-        <div class="particle" style="width: 110px; height: 110px; left: 40%; animation-delay: 0s; animation-duration: 18s;"></div>
-    </div>
+    <div class="bg-animate"></div>
+    <div class="orb"></div>
 
-    <div class="card">
-        <h1>HAPPY BIRTHDAY</h1>
-        <p>Wishing you an amazing day! ✨</p>
-        <button class="btn" onclick="celebrate()">Make a Wish</button>
+    <div class="container">
+        <div class="card">
+            <h1 id="title">HAPPY<br>BIRTHDAY</h1>
+            <p>TO AN AWESOME HUMAN</p>
+            <button class="btn-celebrate" onclick="firework()">CLICK FOR SURPRISE 🎊</button>
+        </div>
     </div>
 
     <script>
-        function celebrate() {
-            alert("ขอให้มีความสุขมากๆ สุขภาพแข็งแรง รวยๆ เฮงๆ ครับ! 🎂🎉");
+        // ฟังก์ชันพลุแบบอลังการ
+        function firework() {
+            // เสียงพลุ (ถ้ามีไฟล์เสียงสามารถใส่เพิ่มได้)
+            
+            // พลุซ้าย
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { x: 0.1, y: 0.6 },
+                colors: ['#ff007f', '#00d2ff', '#ffdd00']
+            });
+
+            // พลุขวา
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { x: 0.9, y: 0.6 },
+                colors: ['#ff007f', '#00d2ff', '#ffdd00']
+            });
+
+            // พลุตรงกลางแบบพุ่งรัวๆ
+            setTimeout(() => {
+                var duration = 3 * 1000;
+                var end = Date.now() + duration;
+
+                (function frame() {
+                    confetti({
+                        particleCount: 5,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 },
+                        colors: ['#ff007f', '#00d2ff']
+                    });
+                    confetti({
+                        particleCount: 5,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 },
+                        colors: ['#ffdd00', '#00d2ff']
+                    });
+
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                }());
+            }, 200);
         }
+
+        // เมื่อโหลดหน้าเว็บ ให้พลุทำงานเบาๆ 1 รอบ
+        window.onload = () => {
+            confetti({
+                particleCount: 100,
+                spread: 160,
+                origin: { y: 0.6 }
+            });
+        };
     </script>
 </body>
 </html>
